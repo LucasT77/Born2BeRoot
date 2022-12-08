@@ -19,3 +19,17 @@ numUsers=$(who | wc -l) #The number of users using the server.
 IPv4=$(hostname -I) #The IPv4 address of your server.
 MAC=$(ip link show | awk '$1 == "link/ether" {print $2}') #Server's MAC (Media Access Control) address.
 numConSudo=$(sudo grep sudo /var/log/auth.log | wc -l) #The number of commands executed with the sudo program.
+
+wall	"	#Architecture:
+			#CPU physical:
+			#vCPU:
+			#Memory Usage:
+			#Disk Usage:
+			#CPU load:
+			#Last boot:
+			#LVM use:
+			#Connections TPC:
+			#User log:
+			#Network:
+			#Sudo:
+		"
