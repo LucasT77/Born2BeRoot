@@ -8,9 +8,9 @@ totalRam=$(free --mega | awk '$1 == "Mem:" {print $2}') #The current available R
 usedRam=$(free --mega | awk '$1 == "Mem:" {print $3}') #Used Ram
 rateUsedRam=$(free | awk '$1 == "Mem:" {printf("%.2f"), $3/$2*100}') #RAM's utilization rate as a percentage.
 
-totalDisk=$() #The current available memory on your server.
-usedDisk=$() # Used disk
-retaUsedDisk=$() #Memory's utilization rate as a percentage.
+totalDisk=$(df -Bg | grep '^/dev/' | grep -v '/boot$' | awk '{ft += $2} END {print ft}') #The current available memory on your server.
+usedDisk=$(df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} END {print ut}') # Used disk
+retaUsedDisk=$(df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} END {print ut}') #Memory's utilization rate as a percentage.
 
 cpuLoad=$(top -bn1 | grep '^%Cpu' | cut -c 9- | xargs | awk '{printf("%.1f%%"), $1 + $3}') #The current utilization rate of your processors as a percentage.
 lastReboot=$(who -b | awk '$1 == "system" {print $3 " " $4}') #The date and time of the last reboot.
