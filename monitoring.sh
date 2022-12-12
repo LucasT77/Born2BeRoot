@@ -10,19 +10,19 @@ rateUsedRam=$(free | awk '$1 == "Mem:" {printf("%.2f"), $3/$2*100}') #RAM's util
 
 totalDisk=$(df -Bg | grep '^/dev/' | grep -v '/boot$' | awk '{ft += $2} END {print ft}') #The current available memory on your server.
 usedDisk=$(df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} END {print ut}') # Used disk
-rateUsedDisk=$(df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} {ft+= $2} END {printf("%d"), ut/ft*100}')) #Memory's utilization rate as a percentage.
+rateUsedDisk=$(df -Bm | grep '^/dev/' | grep -v '/boot$' | awk '{ut += $3} {ft+= $2} END {printf("%d"), ut/ft*100}') #Memory's utilization rate as a percentage.
 
-cpuLoad=$(top -bn1 | grep '^%Cpu' | cut -c 9- | xargs | awk '{printf("%.1f%%"), $1 + $3}') #The current utilization rate of your processors as a percentage.
+cpuLoad=$(top -bn1 | grep Cpu | awk '{printf("%.1f%%", $2 + $4)}') #The current utilization rate of your processors as a percentage.
 lastReboot=$(who -b | awk '$1 == "system" {print $3 " " $4}') #The date and time of the last reboot.
 lvmAux=$(lsblk | grep "lvm" | wc -l)
 lvm=$(if [ $lvmAux -eq 0 ]; then echo no; else echo yes; fi) #Whether LVM is active or not.
 
-numConnectionTCP=$(cat /proc/net/sockstat{,6} | awk '$1 == "TCP:" {print $3}') #The number of active connections
+numConnectionTCP=$(netstat -an | grep ESTABLISHED | wc -l) #The number of active connections
 
 numUsers=$(who | wc -l) #The number of users using the server.
 IPv4=$(hostname -I) #The IPv4 address of your server.
 MAC=$(ip link show | awk '$1 == "link/ether" {print $2}') #Server's MAC (Media Access Control) address.
-numCommandsSudo=$(sudo grep sudo /var/log/auth.log | wc -l) #The number of commands executed with the sudo program.
+numCommandsSudo=$(journalctl _COMM=sudo | grep COMMAND | wc -l) #The number of commands executed with the sudo program.
 
 wall	"	#Architecture: $architecture
 			#CPU physical: $physicalCpu
