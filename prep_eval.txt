@@ -1,0 +1,31 @@
+How the virtual machine works?
+VM working through "Virtualization" technology. Virtualization uses software to simulate virtual hardware that allows 
+VMs to run on a single host machine.
+
+MANDATORY PART
+Single Setup
+	Check that the UFW is started: dpkg -l | grep ufw
+	Check that the SSH is started: dpkg -l | grep ssh
+	check the chosen operating system: uname -a
+User
+	Create a new user: sudo adduser <username>
+	Password rules: cat /etc/login.defs & cat /etc/paw.d/commun-password
+	Create a new group: sudo addgroup <groupname>
+	Add user to a new group: sudo adduser <username> <groupname>
+	Check gropu: getent group <groupname>
+Hostname and Partitions
+	Check hostname: cat /etc/hostname
+	Change hostname: sudo nano /etc/hostname
+	View partitions: lsblk
+Sudo 
+	Check sudo is installed: dpkg -l | grep sudo
+	Add new user to sudo group: sudo adduser <username> sudo
+	Sudo rules: sudo cat /etc/sudoers.d/newsudorules
+	ls /var/log/sudo 
+UFW
+	check ufw: sudo ufw status
+	Add new rule to open port 8080: sudo ufw allow 8080
+	Delete new rule: sudo ufw status numbered & sudo ufw delete <rule-number>
+SSH
+	
+
